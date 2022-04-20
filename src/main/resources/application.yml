@@ -1,0 +1,7 @@
+micronaut:
+  application:
+    name: estudoConsumoAPI
+netty:
+  default:
+    allocator:
+      max-order: 3
