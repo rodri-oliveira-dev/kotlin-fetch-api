@@ -37,3 +37,5 @@ class UsuarioController(
         }
     }
 }
+//https://guides.micronaut.io/latest/micronaut-http-client-gradle-kotlin.html
+//https://docs.micronaut.io/latest/guide/index.html#clientParameters

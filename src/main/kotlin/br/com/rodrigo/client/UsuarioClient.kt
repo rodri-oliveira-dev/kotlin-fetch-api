@@ -1,5 +1,6 @@
 package br.com.rodrigo.client
 
+import br.com.rodrigo.configuration.ForumApiConfiguration
 import br.com.rodrigo.model.Usuario
 import br.com.rodrigo.response.ForumResponseBase
 import br.com.rodrigo.response.UsuarioResponse
@@ -11,14 +12,14 @@ import io.micronaut.http.annotation.Headers
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.client.annotation.Client
 
-@Client(value = "http://localhost:8030/usuarios")
+@Client(ForumApiConfiguration.API_URL)
 @Headers(
-    Header(name = HttpHeaders.USER_AGENT, value = "Micronaut HTTP Client"),
-    Header(name = HttpHeaders.ACCEPT, value = "application/json")
+    Header(name = HttpHeaders.USER_AGENT, value = ForumApiConfiguration.USER_AGENT),
+    Header(name = HttpHeaders.ACCEPT, value = ForumApiConfiguration.ACCEPT)
 )
 interface UsuarioClient {
 
-    @Post
+    @Post("/usuarios")
     fun cadastrar(
         @Header("Authorization") authorization: String,
         @Body usuario: Usuario
