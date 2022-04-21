@@ -1,6 +1,20 @@
 micronaut:
+  server:
+    port: 8080
   application:
     name: estudoConsumoAPI
+  router:
+    versioning:
+      enabled: true
+      default-version: 1
+      parameter:
+        enabled: true
+        names: 'v,api-version'
+      header:
+        enabled: true
+        names:
+          - 'X-API-VERSION'
+          - 'Accept-Version'
 netty:
   default:
     allocator:
