@@ -2,6 +2,7 @@ package br.com.rodrigo.client
 
 import br.com.rodrigo.configuration.ForumApiConfiguration
 import br.com.rodrigo.model.Usuario
+import br.com.rodrigo.model.UsuarioAtualizacao
 import br.com.rodrigo.response.ForumResponseBase
 import br.com.rodrigo.response.PageableResponse
 import br.com.rodrigo.response.UsuarioResponse
@@ -21,6 +22,12 @@ interface UsuarioClient {
     fun cadastrar(
         @Header("Authorization") authorization: String,
         @Body usuario: Usuario
+    ): HttpResponse<ForumResponseBase<UsuarioResponse>>
+
+    @Put("/usuarios")
+    fun atualizar(
+        @Header("Authorization") authorization: String,
+        @Body usuario: UsuarioAtualizacao
     ): HttpResponse<ForumResponseBase<UsuarioResponse>>
 
     @Get("/usuarios/{id}")
