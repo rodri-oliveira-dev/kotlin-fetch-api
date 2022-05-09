@@ -2,6 +2,7 @@ package br.com.rodrigo.controller
 
 import br.com.rodrigo.client.AutenticacaoClient
 import br.com.rodrigo.client.UsuarioClient
+import br.com.rodrigo.dto.UsuarioAtualizacaoInput
 import br.com.rodrigo.dto.UsuarioInput
 import br.com.rodrigo.model.DadosLogin
 import io.micronaut.core.version.annotation.Version
@@ -12,7 +13,7 @@ import io.micronaut.http.uri.UriBuilder
 import io.micronaut.validation.Validated
 import javax.validation.Valid
 
-@Controller("/usuarios", produces = [MediaType.APPLICATION_JSON])
+@Controller("/usuarios", produces = [MediaType.APPLICATION_JSON], consumes = [MediaType.APPLICATION_JSON])
 @Validated
 @Version("1")
 class UsuarioController(
@@ -45,7 +46,20 @@ class UsuarioController(
         }
     }
 
-    @Post(consumes = [MediaType.APPLICATION_JSON])
+    @Put
+    fun atualizar(@Body @Valid usuario: UsuarioAtualizacaoInput): HttpResponse<Any> {
+        val credenciais = recuperaToken()
+        val result = usuarioClient.atualizar(credenciais!!, usuario.paraUsuarioAtualizacao())
+
+        return if (result.body() == null) {
+            HttpResponse.badRequest()
+        } else {
+            val usuario = result.body()
+            HttpResponse.ok(usuario)
+        }
+    }
+
+    @Post
     fun criar(@Body @Valid usuario: UsuarioInput): HttpResponse<Any> {
         val credenciais = recuperaToken()
         val result = usuarioClient.cadastrar(credenciais!!, usuario.paraUsuario())
